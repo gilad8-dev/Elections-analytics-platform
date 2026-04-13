@@ -1,8 +1,10 @@
 # Multilingual Support Protocol
 
+This is an architectural protocol used mainly by agents- to ensure proper scalability of the system.
+
 ## 1. Purpose
 
-This website is designed to support multiple languages. Every language version must be a complete, faithful translation of the Hebrew source — including both **male** and **female** grammatical variants for all text that is gender-inflected in that language.
+This website is designed to support multiple languages. Every language version must be a complete, faithful translation of the Hebrew source - including both **male** and **female** grammatical variants for all text that is gender-inflected in that language.
 
 The Hebrew version is the canonical source of truth. All other languages are derived from it.
 
@@ -12,23 +14,23 @@ The Hebrew version is the canonical source of truth. All other languages are der
 
 Follow this checklist in order. Do not skip steps.
 
-### Step 1 — Create a language file
+### Step 1: Create a language file
 
 Create a new file at `js/lang/<code>.js` where `<code>` is the ISO 639-1 language code (e.g. `en`, `ar`, `fr`, `ru`).
 
 This file must export a single object that mirrors the structure of the Hebrew language file (`js/lang/he.js`). Every key must be present. Missing keys will cause runtime errors.
 
-### Step 2 — Translate all user-facing text
+### Step 2: Translate all user-facing text
 
 Translate every string listed in the **Text Inventory** section below. For each string that requires gender inflection in the target language, provide both a `male` and a `female` variant.
 
-If the target language does not have grammatical gender, you may use a single shared string for both variants — but the key structure must still be present.
+If the target language does not have grammatical gender, you may use a single shared string for both variants- t the key structure must still be present.
 
-### Step 3 — Register the language
+### Step 3: Register the language
 
 Add the new language code and its display name to the language configuration object in `js/lang/index.js`. This is the single place where supported languages are declared.
 
-### Step 4 — Update the submission payload and backend validation
+### Step 4: Update the submission payload and backend validation
 
 Two changes are required:
 
@@ -41,15 +43,15 @@ Two changes are required:
 const VALID_LANGUAGES = new Set(['he', 'ar', 'en']); // add new code here
 ```
 
-### Step 5 — Update the database schema
+### Step 5: Update the database schema
 
-The `submissions` table has a `language TEXT NOT NULL DEFAULT 'he'` column, added via a migration in `server/db.js`. **This column requires no schema change per language** — it is a plain TEXT field with no enum constraint, so any language code is stored as-is once it passes backend validation.
+The `submissions` table has a `language TEXT NOT NULL DEFAULT 'he'` column, added via a migration in `server/db.js`. **This column requires no schema change per language** - it is a plain TEXT field with no enum constraint, so any language code is stored as-is once it passes backend validation.
 
 The only action required in this step is ensuring the column exists (the migration handles this automatically on server startup). New language codes are stored correctly as soon as they are accepted by `VALID_LANGUAGES` (Step 4).
 
-### Step 6 — Verify the stats API accepts the new language code
+### Step 6: Verify the stats API accepts the new language code
 
-The public stats API (`GET /api/stats`, `GET /api/stats/questions`) already supports optional language filtering via a `?language=` query parameter — implemented in `server/routes/stats-helpers.js`. No backend changes are needed for a new language; the filter is freeform text validated against a `/^[a-z]{2,5}$/` pattern.
+The public stats API (`GET /api/stats`, `GET /api/stats/questions`) already supports optional language filtering via a `?language=` query parameter - implemented in `server/routes/stats-helpers.js`. No backend changes are needed for a new language; the filter is freeform text validated against a `/^[a-z]{2,5}$/` pattern.
 
 The public dashboard UI (`/dashboard`) exposes only gender filters, not language filters. **No dashboard UI changes are required when adding a new language.**
 
@@ -73,7 +75,7 @@ The following are **never modified** per language. They are implemented once and
 - Color scheme and visual design
 - Spacing and padding
 - Typography scale (font sizes, weights, line heights)
-- Animations — except direction (see Section 8)
+- Animations (except direction (see Section 8))
 
 The goal is that any UI or design change is made once in the shared CSS and immediately applies to every language version. There must be no per-language copies of HTML structure, CSS rules, or layout logic.
 
@@ -284,4 +286,4 @@ GET /api/stats/questions?language=ar
 
 The CSV export (`GET /api/stats/export`) includes a `language` column for every row.
 
-The dashboard UI currently exposes only a **gender filter** (All / Male / Female) per axis card and in the question analysis panel. Language-based filtering is available via the API but is not surfaced in the dashboard UI — no dashboard changes are required when adding a new language.
+The dashboard UI currently exposes only a **gender filter** (All / Male / Female) per axis card and in the question analysis panel. Language-based filtering is available via the API but is not surfaced in the dashboard UI - no dashboard changes are required when adding a new language.

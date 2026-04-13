@@ -12,7 +12,7 @@ Users answer 52 questions, receive scores on four independent 0<->100 axes, and 
 |------------|-----------|
 | Server     | Node.js / Express |
 | Database   | SQLite via [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) |
-| Frontend   | Vanilla JS, HTML, CSS — no framework |
+| Frontend   | Vanilla JS, HTML, CSS (no framework) |
 | Languages  | Hebrew (RTL), Arabic (RTL), Russian (LTR)|
 
 ---
@@ -35,7 +35,7 @@ npm start            # start the server: (1) Quiz pgae → http://localhost:3000
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/` | The quiz (landing → 52 questions → results) |
-| GET | `/dashboard` | Live aggregate results — open access, read-only |
+| GET | `/dashboard` | Live aggregate results: open access, read-only |
 | GET | `/admin` | Redirects to `/dashboard` (301) |
 | GET | `/guest` | Redirects to `/dashboard` (301) |
 | POST | `/api/submit` | Submit quiz result |
@@ -50,19 +50,19 @@ npm start            # start the server: (1) Quiz pgae → http://localhost:3000
 ```
 politicalculator/
 ├── server/
-│   ├── server.js              Entry point — Express app
+│   ├── server.js              Entry point: Express app
 │   ├── db.js                  SQLite connection + schema init
 │   ├── seed.js                Demo data generator (run once)
 │   ├── routes/
-│   │   ├── submit.js          POST /api/submit — validates + stores submissions
-│   │   ├── stats.js           GET  /api/stats/* — public aggregate stats
+│   │   ├── submit.js          POST /api/submit: validates + stores submissions
+│   │   ├── stats.js           GET  /api/stats/*: public aggregate stats
 │   │   └── stats-helpers.js   Aggregation logic (histograms, distributions)
 │   └── views/
 │       └── dashboard.html     Public dashboard UI (served at /dashboard)
 ├── data/
 │   └── survey.db              SQLite database (auto-created, git-ignored)
 ├── js/
-│   ├── app.js                 Quiz controller — state, rendering, submission
+│   ├── app.js                 Quiz controller: state, rendering, submission
 │   ├── scoring.js             Pure scoring engine (axis calculations)
 │   ├── questions.js           52 question definitions
 │   ├── parties.js             Party ideology positions
@@ -108,7 +108,13 @@ Stores an anonymous, consent-based survey submission.
 }
 ```
 
-Answer encoding: `0`=strongly agree `1`=agree `2`=neutral `3`=disagree `4`=strongly disagree `-1`=skipped
+Answer encoding: 
+  `0` =strongly agree 
+  `1` =agree 
+  `2` =neutral 
+  `3` =disagree 
+  `4` =strongly disagree 
+  `-1`=skipped
 
 **Responses:** `201 { ok: true }` | `400 { error }` | `500 server error`
 
@@ -139,7 +145,7 @@ Query params: `?gender=all|male|female`
 
 ### `GET /api/stats/questions`
 
-Per-question answer distribution.
+Per question answer distribution.
 
 Query params: `?gender=all|male|female`
 
@@ -206,4 +212,4 @@ This lets you segment submissions by version in analytics.
 
 ## Adding a New Language
 
-See [docs/MULTILINGUAL.md](docs/MULTILINGUAL.md) for the full checklist — text inventory, architecture notes, and quality requirements.
+See [docs/MULTILINGUAL.md](docs/MULTILINGUAL.md) for the full checklist: text inventory, architecture notes, and quality requirements.
