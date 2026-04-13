@@ -4,6 +4,8 @@ A full-stack political quiz that maps voters across four ideological axes and re
 
 Users answer 52 questions, receive scores on four independent 0<->100 axes, and get personalised party recommendations based on their results. With consent, anonymous submissions are stored and visualised in a live dashboard. This public demo version includes one open-access dashboard backed by synthetic demo data.
 
+This is a stripped-down public version of the full application, designed for demonstration and portfolio purposes. All code in this repository is the intellectual property of Gilad Shaked.
+
 ---
 
 ## Tech Stack
