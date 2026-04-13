@@ -1,0 +1,1787 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Heebo', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  background: #f0f4f8;
+  color: #1a202c;
+  min-height: 100vh;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   PAGE LAYOUT
+   ============================================================ */
+#app {
+  min-height: 100vh;
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 3rem 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.page.active {
+  display: flex;
+}
+
+.container {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   LANDING PAGE
+   ============================================================ */
+#page-landing .container {
+  text-align: center;
+}
+
+.landing-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.landing-gender-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.landing-gender-row .btn {
+  width: 200px;
+  padding: 0.9rem 1rem;
+  font-size: 1.1rem;
+}
+
+/* Male start button — deep navy blue (dark bottom-right → bright top-left) */
+#btn-start-male {
+  background: linear-gradient(315deg, #1a365d 0%, #2b6cb0 100%);
+  box-shadow: 0 2px 8px rgba(26, 54, 93, 0.35);
+}
+#btn-start-male:hover {
+  background: linear-gradient(315deg, #153050 0%, #2560a0 100%);
+  box-shadow: 0 6px 20px rgba(26, 54, 93, 0.45);
+}
+
+/* Female start button — teal gradient (dark bottom-right → bright top-left) */
+.btn-primary.btn-primary-female {
+  background: linear-gradient(315deg, #0e7490 0%, #22d3ee 100%);
+  box-shadow: 0 2px 8px rgba(14, 116, 144, 0.35);
+}
+.btn-primary.btn-primary-female:hover {
+  background: linear-gradient(315deg, #0c6177 0%, #06b6d4 100%);
+  box-shadow: 0 6px 20px rgba(14, 116, 144, 0.45);
+}
+
+.landing-skip-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Secondary landing buttons: equal width, unified height */
+.landing-skip-row .btn {
+  width: 260px;
+  padding: 0.9rem 1rem;
+  font-size: 1.15rem;
+}
+
+/* Secondary landing buttons match primary's shadow/no-border style */
+.landing-actions .btn-secondary {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.landing-actions .btn-secondary:hover:not(:disabled) {
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Language toggle — fixed pill, top-right corner */
+.lang-toggle {
+  position: fixed;
+  top: 1.1rem;
+  right: 1.25rem;
+  z-index: 200;
+  display: flex;
+  gap: 4px;
+  background: #ffffff;
+  border-radius: 50px;
+  padding: 4px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.13);
+}
+.lang-toggle-btn {
+  padding: 6px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  color: #718096;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.lang-toggle-btn:hover:not(.active) {
+  background: #edf2f7;
+  color: #2d3748;
+}
+.lang-toggle-btn.active {
+  background: #2b6cb0;
+  color: #ffffff;
+}
+
+.landing-title {
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: 'Secular One', sans-serif;
+  color: #0d1117;
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+
+.landing-description {
+  font-size: 1.35rem;
+  color: #4a5568;
+  line-height: 1.9;
+  margin-bottom: 3rem;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   BUTTONS – BASE
+   ============================================================ */
+.btn {
+  font-family: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: 3px solid #4299e1;
+  outline-offset: 3px;
+}
+
+/* Primary – "התחל" */
+.btn-primary {
+  background: #2b6cb0;
+  color: #fff;
+  padding: 0.9rem 3.5rem;
+  font-size: 1.15rem;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(43, 108, 176, 0.25);
+}
+
+.btn-primary:hover {
+  background: #2c5282;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(43, 108, 176, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Secondary – "שאלה קודמת" */
+.btn-secondary {
+  background: #ffffff;
+  color: #4a5568;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.95rem;
+  border: 2px solid #cbd5e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #cbd5e0;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* "שאלה קודמת" — match answer button border/shadow style */
+.question-nav .btn-secondary {
+  box-shadow: none;
+  border-color: #e2e8f0;
+}
+
+/* ============================================================
+   QUESTION PAGE – HEADER & PROGRESS
+   ============================================================ */
+.question-header {
+  margin-bottom: 2.5rem;
+}
+
+.question-number {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d3748;
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+/* Progress bar: RTL so fill grows right→left */
+.progress-track {
+  height: 7px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 9999px;
+  overflow: hidden;
+  direction: rtl;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to left, #5aaceb, #3a82c4);
+  border-radius: 9999px;
+  width: 0%;
+  transition: width 0.35s ease;
+}
+
+/* ============================================================
+   QUESTION TEXT
+   ============================================================ */
+.question-text {
+  font-size: 1.55rem;
+  font-weight: 700;
+  font-family: 'Secular One', sans-serif;
+  line-height: 1.65;
+  color: #1a202c;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ============================================================
+   ANSWER BUTTONS
+   ============================================================ */
+.answer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 2.5rem;
+}
+
+.btn-answer {
+  width: 100%;
+  padding: 1.05rem 1.25rem;
+  line-height: 1;
+  font-size: 1.25rem;
+  text-align: right;
+  background: #fff;
+  color: #2d3748;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-family: 'Secular One', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+  outline: none;
+}
+
+/* (pointer: fine) ensures this only matches real mice, not touch screens.
+   iOS Safari incorrectly reports (hover: hover) for touch input, but correctly
+   reports (pointer: coarse), so the combined query reliably excludes touch. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-answer:hover {
+    border-color: #4299e1;
+    background: #ebf8ff;
+    color: #2b6cb0;
+  }
+}
+
+.btn-answer.selected {
+  background: #2b6cb0;
+  border-color: #2b6cb0;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(43, 108, 176, 0.25);
+}
+
+.btn-answer:focus-visible {
+  outline: 3px solid #4299e1;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   QUESTION NAVIGATION
+   ============================================================ */
+.question-nav {
+  display: flex;
+  /* In RTL flex: flex-start = physical right (natural RTL start) */
+  justify-content: flex-start;
+}
+
+/* ============================================================
+   RESULTS PAGE
+   ============================================================ */
+#page-results {
+  align-items: flex-start;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.results-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  font-family: 'Secular One', sans-serif;
+  text-align: center;
+  color: #0d1117;
+  margin-bottom: 0.4rem;
+}
+
+.results-subtitle {
+  text-align: center;
+  color: #4a5568;
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+.results-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* One axis block */
+.result-axis-block {
+  /* wrapper */
+}
+
+/* Header row: left-label | axis-title | right-label — forced LTR for physical positioning */
+.result-axis-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  direction: ltr;
+  margin-bottom: 0.55rem;
+}
+
+.result-axis-title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.12rem;
+  font-weight: 700;
+  font-family: 'Secular One', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a0aec0;
+  direction: rtl;
+}
+
+/* Bar row: full-width container for the bar (no side labels) */
+.result-bar-row {
+  margin-bottom: 0.15rem;
+}
+
+.result-label {
+  font-size: 1.1rem;
+  font-family: 'Oswald', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  color: #4a5568;
+  flex: 0 0 110px;
+  line-height: 1.35;
+  /* Hebrew text is RTL within a physically LTR row */
+  direction: rtl;
+  /* Explicit visible overflow so the absolute-positioned tooltip is never
+     clipped by the RTL-in-LTR mixed-direction scroll context */
+  overflow: visible;
+}
+
+.result-label.label-left {
+  text-align: right;
+}
+
+.result-label.label-right {
+  text-align: left;
+}
+
+/* ============================================================
+   AXIS LABEL TOOLTIPS
+   ============================================================ */
+.has-tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.axis-tooltip {
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+
+  /* Positioning: floats above the label */
+  position: absolute;
+  bottom: calc(100% + 10px);
+  width: 240px;
+  z-index: 20;
+
+  /* Appearance */
+  background: #1a202c;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  background-clip: unset;
+  -webkit-background-clip: unset;
+  font-family: 'Secular One', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.55;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  direction: rtl;
+  text-align: right;
+  text-decoration: none;
+
+  /* Slight upward nudge on enter */
+  transform: translateY(4px);
+}
+
+/* Arrow pointing downward from the tooltip box */
+.axis-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  border: 6px solid transparent;
+  border-top-color: #1a202c;
+}
+
+/* Left label: tooltip opens toward the center (rightward from the label) */
+.label-left .axis-tooltip {
+  left: 0;
+}
+.label-left .axis-tooltip::after {
+  left: 18px;
+}
+
+/* Right label: tooltip opens toward the center (leftward from the label) */
+.label-right .axis-tooltip {
+  right: 0;
+}
+.label-right .axis-tooltip::after {
+  right: 18px;
+}
+
+/* Show on hover (desktop) or tap-active (mobile) */
+.has-tooltip:hover .axis-tooltip,
+.has-tooltip.tooltip-active .axis-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient text effect on hover for edge labels */
+.axis-block-first .result-label.has-tooltip:hover,
+.axis-block-first .result-label.tooltip-active {
+  background-image: linear-gradient(135deg, #90cdf4, #3182ce);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-second .result-label.has-tooltip:hover,
+.axis-block-second .result-label.tooltip-active {
+  background-image: linear-gradient(135deg, #48bb78, #276749);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-third .result-label.has-tooltip:hover,
+.axis-block-third .result-label.tooltip-active {
+  background-image: linear-gradient(135deg, #ed8936, #9c4221);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-fourth .result-label.has-tooltip:hover,
+.axis-block-fourth .result-label.tooltip-active {
+  background-image: linear-gradient(135deg, #9f7aea, #553c9a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Bar outer container */
+.result-bar-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.result-bar-outer {
+  width: 100%;
+  height: 44px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+/* Colored fill: always starts at physical left */
+.result-bar-inner {
+  height: 100%;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%;
+  transition: width 1.6s ease-out;
+}
+
+/* Score number centered in the full bar container */
+.result-bar-score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-family: 'Oswald', sans-serif;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  z-index: 2;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.score-light {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.score-dark {
+  color: #4a5568;
+}
+
+/* Per-axis fill colors — diagonal sheen + left-to-right gradient + right-edge shadow glow */
+.bar-first  { background: linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 55%), linear-gradient(to right, #bee3f8, #63b3ed); box-shadow: 0 0 26px 3px rgba(200,230,255,0.6); }
+.bar-second { background: linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 55%), linear-gradient(to right, #c6f6d5, #68d391); box-shadow: 0 0 26px 3px rgba(180,245,215,0.6); }
+.bar-third  { background: linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 55%), linear-gradient(to right, #feebc8, #f6ad55); box-shadow: 0 0 26px 3px rgba(255,215,140,0.6); }
+.bar-fourth { background: linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 55%), linear-gradient(to right, #e9d8fd, #b794f4); box-shadow: 0 0 26px 3px rgba(220,195,255,0.6); }
+
+/* Per-axis empty-track colors — darker, shows through fill gradient at the edge */
+.bar-bg-first  { background: #3182ce; } /* blue-600   */
+.bar-bg-second { background: #2f855a; } /* green-600  */
+.bar-bg-third  { background: #dd6b20; } /* amber-600  */
+.bar-bg-fourth { background: #805ad5; } /* purple-600 */
+
+/* ============================================================
+   PER-AXIS TEXT COLORS
+   ============================================================ */
+
+/* First axis — blue */
+.axis-block-first .result-axis-title {
+  background-image: linear-gradient(135deg, #63b3ed, #2b6cb0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-first .result-label      { color: #3182ce; }
+.axis-block-first .axis-party-name   { color: #2b6cb0; }
+.axis-block-first .axis-party-desc   { color: #3182ce; }
+.axis-block-first .axis-party-prox   { color: #2b6cb0; }
+.axis-block-first .axis-party-secondary-header { color: #90cdf4; }
+.axis-block-first .axis-party-secondary-name   { color: #2b6cb0; }
+.axis-block-first .axis-party-secondary-prox   { color: #3182ce; }
+.axis-block-first .axis-party-expanded-secondary { border-right-color: #bee3f8; }
+.axis-block-first .axis-party-row.tooltip-active {
+  border-color: #63b3ed;
+  background: #ebf8ff;
+  box-shadow: 0 2px 8px rgba(49, 130, 206, 0.15);
+}
+.axis-block-first .axis-party-row .party-tooltip,
+.axis-block-first .axis-tooltip { background: #2b6cb0; }
+.axis-block-first .axis-party-row .party-tooltip::after { border-top-color: #2b6cb0; }
+.axis-block-first .axis-tooltip::after { border-top-color: #2b6cb0; }
+
+/* Second axis — green */
+.axis-block-second .result-axis-title {
+  background-image: linear-gradient(135deg, #48bb78, #276749);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-second .result-label      { color: #2f855a; }
+.axis-block-second .axis-party-name   { color: #276749; }
+.axis-block-second .axis-party-desc   { color: #2f855a; }
+.axis-block-second .axis-party-prox   { color: #276749; }
+.axis-block-second .axis-party-secondary-header { color: #68d391; }
+.axis-block-second .axis-party-secondary-name   { color: #276749; }
+.axis-block-second .axis-party-secondary-prox   { color: #2f855a; }
+.axis-block-second .axis-party-expanded-secondary { border-right-color: #c6f6d5; }
+.axis-block-second .axis-party-row.tooltip-active {
+  border-color: #48bb78;
+  background: #f0fff4;
+  box-shadow: 0 2px 8px rgba(47, 133, 90, 0.15);
+}
+.axis-block-second .axis-party-row .party-tooltip,
+.axis-block-second .axis-tooltip { background: #276749; }
+.axis-block-second .axis-party-row .party-tooltip::after { border-top-color: #276749; }
+.axis-block-second .axis-tooltip::after { border-top-color: #276749; }
+
+/* Third axis — amber */
+.axis-block-third .result-axis-title {
+  background-image: linear-gradient(135deg, #f6ad55, #9c4221);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-third .result-label      { color: #c05621; }
+.axis-block-third .axis-party-name   { color: #9c4221; }
+.axis-block-third .axis-party-desc   { color: #c05621; }
+.axis-block-third .axis-party-prox   { color: #9c4221; }
+.axis-block-third .axis-party-secondary-header { color: #f6ad55; }
+.axis-block-third .axis-party-secondary-name   { color: #9c4221; }
+.axis-block-third .axis-party-secondary-prox   { color: #c05621; }
+.axis-block-third .axis-party-expanded-secondary { border-right-color: #feebc8; }
+.axis-block-third .axis-party-row.tooltip-active {
+  border-color: #ed8936;
+  background: #fffaf0;
+  box-shadow: 0 2px 8px rgba(192, 86, 33, 0.15);
+}
+.axis-block-third .axis-party-row .party-tooltip,
+.axis-block-third .axis-tooltip { background: #9c4221; }
+.axis-block-third .axis-party-row .party-tooltip::after { border-top-color: #9c4221; }
+.axis-block-third .axis-tooltip::after { border-top-color: #9c4221; }
+
+/* Fourth axis — purple */
+.axis-block-fourth .result-axis-title {
+  background-image: linear-gradient(135deg, #9f7aea, #553c9a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.axis-block-fourth .result-label      { color: #6b46c1; }
+.axis-block-fourth .axis-party-name   { color: #553c9a; }
+.axis-block-fourth .axis-party-desc   { color: #6b46c1; }
+.axis-block-fourth .axis-party-prox   { color: #553c9a; }
+.axis-block-fourth .axis-party-secondary-header { color: #b794f4; }
+.axis-block-fourth .axis-party-secondary-name   { color: #553c9a; }
+.axis-block-fourth .axis-party-secondary-prox   { color: #6b46c1; }
+.axis-block-fourth .axis-party-expanded-secondary { border-right-color: #e9d8fd; }
+.axis-block-fourth .axis-party-row.tooltip-active {
+  border-color: #9f7aea;
+  background: #faf5ff;
+  box-shadow: 0 2px 8px rgba(107, 70, 193, 0.15);
+}
+.axis-block-fourth .axis-party-row .party-tooltip,
+.axis-block-fourth .axis-tooltip { background: #553c9a; }
+.axis-block-fourth .axis-party-row .party-tooltip::after { border-top-color: #553c9a; }
+.axis-block-fourth .axis-tooltip::after { border-top-color: #553c9a; }
+
+/* Gradient fills for the edge-label tooltip bubbles — left brighter, right darker */
+.axis-block-first  .label-left  .axis-tooltip { background: linear-gradient(135deg, #90cdf4, #4299e1); }
+.axis-block-first  .label-right .axis-tooltip { background: linear-gradient(135deg, #4299e1, #2b6cb0); }
+.axis-block-second .label-left  .axis-tooltip { background: linear-gradient(135deg, #68d391, #38a169); }
+.axis-block-second .label-right .axis-tooltip { background: linear-gradient(135deg, #38a169, #276749); }
+.axis-block-third  .label-left  .axis-tooltip { background: linear-gradient(135deg, #f6ad55, #c05621); }
+.axis-block-third  .label-right .axis-tooltip { background: linear-gradient(135deg, #e07332, #9c4221); }
+.axis-block-fourth .label-left  .axis-tooltip { background: linear-gradient(135deg, #b794f4, #6b46c1); }
+.axis-block-fourth .label-right .axis-tooltip { background: linear-gradient(135deg, #805ad5, #553c9a); }
+
+/* Arrow colors match the dark end of each bubble gradient */
+.axis-block-first  .label-left  .axis-tooltip::after { border-top-color: #4299e1; }
+.axis-block-second .label-left  .axis-tooltip::after { border-top-color: #38a169; }
+.axis-block-third  .label-left  .axis-tooltip::after { border-top-color: #c05621; }
+.axis-block-fourth .label-left  .axis-tooltip::after { border-top-color: #6b46c1; }
+
+/* First axis on desktop: tooltip opens downward to avoid overflowing the top of the viewport */
+@media (min-width: 900px) {
+  .axis-block-first .axis-tooltip {
+    bottom: auto;
+    top: calc(100% + 10px);
+    transform: translateY(-4px); /* nudge downward on enter */
+  }
+  .axis-block-first .has-tooltip:hover .axis-tooltip,
+  .axis-block-first .has-tooltip.tooltip-active .axis-tooltip {
+    transform: translateY(0);
+  }
+  /* Arrow flips to point upward (sits above the tooltip box) */
+  .axis-block-first .axis-tooltip::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: #2b6cb0;
+  }
+  .axis-block-first .label-left .axis-tooltip::after {
+    border-top-color: transparent;
+    border-bottom-color: #4299e1;
+  }
+}
+
+/* ============================================================
+   PARTY RECOMMENDATIONS
+   ============================================================ */
+
+/* Section wrapper */
+.party-section {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.party-section-title {
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-family: 'Secular One', sans-serif;
+  color: #1a202c;
+  margin-bottom: 1.75rem;
+}
+
+/* Top party — full-width horizontal card */
+.party-top-wrap {
+  margin-bottom: 1.25rem;
+}
+
+/* Axis cards — horizontal row */
+.party-axis-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ── Card base ── */
+.party-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.75rem 0.85rem;
+  background: #fff;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  cursor: default;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  /* Prevent tooltip from being clipped */
+  overflow: visible;
+}
+
+.party-card:hover {
+  border-color: #4299e1;
+  box-shadow: 0 4px 14px rgba(66, 153, 225, 0.18);
+}
+
+/* Top card sizing — horizontal layout */
+.party-card-top {
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.75rem;
+}
+
+/* Axis card sizing */
+.party-card-axis {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Text group inside top card (name + proximity, stacked) */
+.party-top-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+/* ── Avatar circle ── */
+.party-avatar {
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  font-weight: 800;
+  color: #fff;
+}
+
+.party-card-top .party-avatar {
+  width: 88px;
+  height: 88px;
+  font-size: 1.7rem;
+}
+
+.party-card-axis .party-avatar {
+  width: 46px;
+  height: 46px;
+  font-size: 1rem;
+}
+
+.party-avatar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Party name ── */
+.party-name {
+  font-weight: 700;
+  color: #1a202c;
+  text-align: center;
+  direction: rtl;
+  line-height: 1.3;
+}
+
+.party-card-top .party-name {
+  font-size: 1.2rem;
+  font-family: 'Secular One', sans-serif;
+  text-align: right;
+}
+
+.party-card-axis .party-name {
+  font-size: 0.8rem;
+}
+
+/* ── Proximity percentage ── */
+.party-proximity {
+  font-weight: 800;
+  color: #2b6cb0;
+  line-height: 1;
+}
+
+.party-card-top .party-proximity {
+  font-size: 1.6rem;
+  font-family: 'Secular One', sans-serif;
+}
+
+.party-card-axis .party-proximity {
+  font-size: 1.1rem;
+}
+
+/* ── Axis label (small caps above avatar on axis cards) ── */
+.party-axis-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a0aec0;
+  text-align: center;
+  direction: rtl;
+}
+
+/* ── Party tooltip ── */
+.party-tooltip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+
+  /* Centered above the card */
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  width: 260px;
+  z-index: 30;
+
+  background: #1a202c;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  direction: rtl;
+  text-align: right;
+  white-space: normal;
+}
+
+/* Arrow pointing down toward the card */
+.party-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a202c;
+}
+
+.party-card:hover .party-tooltip,
+.party-card.tooltip-active .party-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Per-axis closest party mini-row (shown below each bar) ── */
+.axis-party-row {
+  direction: rtl;
+  margin-top: 0.75rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, opacity 0.18s ease;
+}
+
+.axis-party-row.tooltip-active {
+  border-color: #4299e1;
+  box-shadow: 0 2px 8px rgba(66, 153, 225, 0.12);
+}
+
+/* Normal state — visible by default. Height snaps instantly; the row's own
+   opacity transition (on .axis-party-row) handles the visual fade. */
+.axis-party-normal {
+  overflow: hidden;
+  max-height: 60px;
+}
+
+.axis-party-normal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+}
+
+/* Expanded state — hidden by default. */
+.axis-party-expanded {
+  overflow: hidden;
+  max-height: 0;
+}
+
+.axis-party-expanded-inner {
+  display: flex;
+  align-items: stretch;
+  direction: rtl;
+}
+
+/* Main column: right ~75% — avatar + description */
+.axis-party-expanded-main {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  min-width: 0;
+}
+
+/* Secondary column: left ~25% — additional close parties */
+.axis-party-expanded-secondary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.65rem 0.75rem;
+  border-right: 1px solid #e2e8f0;
+  direction: rtl;
+  min-width: 0;
+}
+
+.axis-party-secondary-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #a0aec0;
+  line-height: 1.3;
+  margin-bottom: 0.15rem;
+}
+
+.axis-party-secondary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  direction: rtl;
+}
+
+.axis-party-secondary-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d3748;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.axis-party-secondary-prox {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #718096;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Active: height swaps instantly while the box is at opacity 0 (invisible) */
+.axis-party-row.tooltip-active .axis-party-normal {
+  max-height: 0;
+}
+
+.axis-party-row.tooltip-active .axis-party-expanded {
+  max-height: 300px;
+}
+
+/* Larger avatar in expanded state */
+.axis-party-expanded-avatar {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #fff;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-out 0.12s;
+}
+
+.axis-party-row.tooltip-active .axis-party-expanded-avatar {
+  opacity: 1;
+}
+
+/* Tooltip text in expanded state */
+.axis-party-expanded-text {
+  flex: 1;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.55;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+}
+
+.axis-party-text {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.axis-party-name {
+  font-weight: 700;
+  color: #1a202c;
+  margin-inline-end: 0.35rem;
+}
+
+.axis-party-desc {
+  font-size: 0.88rem;
+  color: #4a5568;
+}
+
+.axis-party-prox {
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-family: 'Secular One', sans-serif;
+  color: #2b6cb0;
+  margin-inline-start: 0.35rem;
+}
+
+/* ============================================================
+   SHARE BUTTONS
+   ============================================================ */
+.share-section {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+  text-align: center;
+}
+
+.results-footer {
+  margin-top: 2.5rem;
+}
+
+.share-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  direction: ltr;
+}
+
+.share-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.share-btn:hover {
+  opacity: 0.85;
+  transform: scale(1.1);
+}
+
+.share-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: #fff;
+}
+
+.share-whatsapp  { background: #25D366; }
+.share-instagram { background: radial-gradient(circle at 30% 110%, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.share-x         { background: #000; }
+.share-facebook  { background: #1877F2; }
+
+/* ============================================================
+   RESPONSIVE – TABLET / MOBILE
+   ============================================================ */
+@media (max-width: 640px) {
+  .page {
+    padding: 2rem 1rem;
+  }
+
+  .landing-title {
+    font-size: 2.2rem;
+  }
+
+  .landing-description {
+    font-size: 1rem;
+  }
+
+  .landing-gender-row,
+  .landing-skip-row {
+    width: 100%;
+  }
+
+  .landing-gender-row .btn {
+    flex: 1;
+    max-width: 190px;
+    padding: 0.75rem 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .landing-skip-row .btn {
+    flex: 1;
+    max-width: 210px;
+    padding: 0.65rem 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .question-text {
+    font-size: 1.2rem;
+  }
+
+
+  /* Results page — compact layout to fit all 4 axes without scrolling */
+  #page-results {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  .results-title {
+    font-size: 1.8rem;
+  }
+
+  .results-subtitle {
+    margin-bottom: 1.5rem;
+  }
+
+  .results-bars {
+    gap: 1.25rem;
+  }
+
+  .result-axis-header {
+    margin-bottom: 0.35rem;
+  }
+
+  .result-label {
+    flex: 0 0 75px;
+    font-size: 0.92rem;
+  }
+
+  .result-bar-outer {
+    height: 36px;
+  }
+
+  .result-bar-score {
+    font-size: 1.15rem;
+  }
+
+  .axis-party-row {
+    margin-top: 0.45rem;
+  }
+
+  .axis-party-normal-inner {
+    padding: 0.3rem 0.75rem;
+  }
+
+  .axis-party-name,
+  .axis-party-prox {
+    font-size: 0.88rem;
+  }
+
+  /* Party cards on mobile */
+  .party-axis-row {
+    gap: 0.4rem;
+  }
+
+  .party-card-top {
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .party-card-top .party-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 1.3rem;
+  }
+
+  .party-card-axis .party-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .party-card-axis .party-name {
+    font-size: 0.72rem;
+  }
+
+  .party-card-axis .party-proximity {
+    font-size: 1rem;
+  }
+
+  .party-tooltip {
+    width: 200px;
+  }
+}
+
+@media (max-width: 380px) {
+  .result-label {
+    flex: 0 0 65px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================
+   ANIMATIONS & PAGE TRANSITIONS
+   ============================================================ */
+
+/* Keyframes */
+@keyframes anim-fade-in-down {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes anim-fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes anim-fade-out-up {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-22px); }
+}
+@keyframes anim-fade-out-down {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(16px); }
+}
+@keyframes anim-slide-out-left {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-55px); }
+}
+@keyframes anim-slide-in-right {
+  from { opacity: 0; transform: translateX(55px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes anim-slide-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(55px); }
+}
+@keyframes anim-slide-in-left {
+  from { opacity: 0; transform: translateX(-55px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes anim-fade-out-scale {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 0; transform: scale(0.93) translateY(-12px); }
+}
+@keyframes anim-shrink-out {
+  0%   { opacity: 1; transform: scale(1)    translateY(0);    }
+  100% { opacity: 0; transform: scale(0.88) translateY(-8px); }
+}
+@keyframes anim-fade-in-scale {
+  from { opacity: 0; transform: scale(0.96) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes anim-results-title-enter {
+  /* Phase 1: fade in at center (~0–0.4s) */
+  0%   { opacity: 0; transform: translateY(28vh); animation-timing-function: ease-out; }
+  18%  { opacity: 1; transform: translateY(28vh); animation-timing-function: linear; }
+  /* Phase 2: hold at center — visible for ~1s so the user can read it */
+  64%  { opacity: 1; transform: translateY(28vh); animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+  /* Phase 3: smooth ease-in-out slide up (~0.8s) */
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes anim-results-subtitle-enter {
+  /* Wait, then fade in (~0.55–0.9s) */
+  0%   { opacity: 0; transform: translateY(28vh); animation-timing-function: linear; }
+  25%  { opacity: 0; transform: translateY(28vh); animation-timing-function: ease-out; }
+  41%  { opacity: 1; transform: translateY(28vh); animation-timing-function: linear; }
+  /* Phase 2: hold — both title + subtitle visible together for ~0.5s */
+  64%  { opacity: 1; transform: translateY(28vh); animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+  /* Phase 3: slide up in sync with title */
+  100% { opacity: 1; transform: translateY(0); }
+}
+/*
+ * Desktop header animation — three keyframes, clean split of concerns:
+ *
+ * 1. anim-results-header-slide-desk  — applied to .results-header container.
+ *    During .results-entering the container is position:fixed at its normal
+ *    top-right coordinates (top:1.5rem, right:2rem).  A translate moves it
+ *    leftward+downward to the viewport centre for the hold phase, then slides
+ *    it back to translate(0,0) = its fixed/grid position.
+ *    X: right-column centre ≈ 100vw−8.875rem → need to shift left (50vw−8.875rem).
+ *    Y: header top ≈ 1.5rem + 0.5rem padding = 2rem, title centre ≈ 3rem → shift down (50vh−3rem).
+ *
+ * 2. anim-results-title-opacity-desk   — opacity only on h1 (no transform).
+ * 3. anim-results-subtitle-opacity-desk — opacity only on p  (delayed fade-in).
+ */
+@keyframes anim-results-header-slide-desk {
+  0%   { transform: translate(calc(-(50vw - 8.875rem)), calc(50vh - 3rem)); animation-timing-function: linear; }
+  64%  { transform: translate(calc(-(50vw - 8.875rem)), calc(50vh - 3rem)); animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes anim-results-title-opacity-desk {
+  0%   { opacity: 0; animation-timing-function: ease-out; }
+  18%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes anim-results-subtitle-opacity-desk {
+  0%, 25% { opacity: 0; }
+  41%     { opacity: 1; animation-timing-function: linear; }
+  100%    { opacity: 1; }
+}
+
+/* Transition utility classes */
+.anim-exit-left   { animation: anim-slide-out-left  0.26s ease forwards; pointer-events: none; }
+.anim-exit-right  { animation: anim-slide-out-right 0.26s ease forwards; pointer-events: none; }
+.anim-enter-right { animation: anim-slide-in-right  0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.anim-enter-left  { animation: anim-slide-in-left   0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.anim-exit-scale  { animation: anim-fade-out-scale  0.28s ease forwards; pointer-events: none; }
+.anim-enter-scale { animation: anim-fade-in-scale   0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+
+/* LTR overrides — applied to all LTR languages (e.g. Russian) */
+
+/* Body direction: overrides the hardcoded direction:rtl on body.
+   Fixes text flow, period placement, and flex row order for all LTR languages. */
+html[dir="ltr"] body { direction: ltr; overflow-x: clip; }
+
+/* Landing title/description: tuned for longer LTR words */
+html[dir="ltr"] .landing-title         { font-size: 2.4rem; }
+html[dir="ltr"] .landing-description   { font-size: 1.18rem; max-width: 580px; }
+@media (max-width: 640px) {
+  html[dir="ltr"] .landing-description { font-size: 0.95rem; }
+}
+html[dir="ltr"] .landing-gender-row .btn { width: 260px; white-space: nowrap; }
+html[dir="ltr"] .lang-toggle { direction: rtl; }
+
+/* Progress bar: reverse fill direction */
+html[dir="ltr"] .progress-track { direction: ltr; }
+html[dir="ltr"] .progress-fill  { background: linear-gradient(to right, #5aaceb, #3a82c4); }
+
+/* Answer buttons: align text to the left in LTR languages */
+html[dir="ltr"] .btn-answer { text-align: left; }
+
+/* Question animations: reverse slide direction */
+html[dir="ltr"] .anim-exit-left  { animation: anim-slide-out-right 0.26s ease forwards; pointer-events: none; }
+html[dir="ltr"] .anim-exit-right { animation: anim-slide-out-left  0.26s ease forwards; pointer-events: none; }
+html[dir="ltr"] .anim-enter-left { animation: anim-slide-in-right  0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+html[dir="ltr"] .anim-enter-right { animation: anim-slide-in-left  0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+
+/* Tooltip internal direction in LTR languages. The label itself stays direction:rtl
+   (same as Hebrew/Arabic) so background-clip:text renders correctly for right-aligned
+   text — changing direction:ltr on the label caused gradient-text clipping on desktop. */
+html[dir="ltr"] .axis-tooltip  { direction: ltr; text-align: left; }
+
+/* Left label in LTR mode: add a right-padding buffer so the right-aligned text anchor
+   sits 4px away from the box boundary. Without this, background-clip:text in a LTR body
+   context clips the last glyph ("3") which renders exactly at the box's right edge. */
+html[dir="ltr"] .result-label.label-left { padding-right: 4px; }
+
+/* Arabic: results subtitle is slightly longer than Hebrew/Russian — allow it to spread to one line. */
+html[lang="ar"] .results-subtitle { white-space: nowrap; }
+
+/* Arabic: secondary header text ('أحزاب قريبة إضافية:') is longer than Hebrew/Russian —
+   prevent wrapping and let the column grow to fit its content. */
+html[lang="ar"] .axis-party-secondary-header { white-space: nowrap; }
+html[lang="ar"] .axis-party-expanded-secondary { min-width: auto; }
+
+/* Axis party expanded hover state: fix layout order for LTR languages.
+   In RTL the flex row is: [main: avatar+text] [secondary: other parties] rendered right-to-left.
+   In LTR it must read left-to-right: avatar | explanation text | other parties.
+   The secondary column divider also flips from border-right to border-left. */
+html[dir="ltr"] .axis-party-row                { direction: ltr; }
+html[dir="ltr"] .axis-party-expanded-inner      { direction: ltr; }
+html[dir="ltr"] .axis-party-expanded-text       { direction: ltr; text-align: left; }
+html[dir="ltr"] .axis-party-secondary-item      { direction: ltr; }
+html[dir="ltr"] .axis-party-expanded-secondary  {
+  border-right: none;
+  border-left: 1px solid #e2e8f0;
+}
+/* Per-axis divider colors for LTR (mirrors the border-right-color rules above) */
+html[dir="ltr"] .axis-block-first  .axis-party-expanded-secondary { border-left-color: #bee3f8; }
+html[dir="ltr"] .axis-block-second .axis-party-expanded-secondary { border-left-color: #c6f6d5; }
+html[dir="ltr"] .axis-block-third  .axis-party-expanded-secondary { border-left-color: #feebc8; }
+html[dir="ltr"] .axis-block-fourth .axis-party-expanded-secondary { border-left-color: #e9d8fd; }
+
+/* Question body wrapper — only this div slides between questions */
+#question-body {
+  display: block;
+}
+
+/* Landing page — staggered entrance on each visit */
+#page-landing.active .landing-title {
+  animation: anim-fade-in-down 0.65s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+#page-landing.active .landing-description {
+  animation: anim-fade-in-up 0.55s ease 0.2s both;
+}
+#page-landing.active #btn-start-male,
+#page-landing.active #btn-start-female {
+  animation: anim-fade-in-up 0.5s ease 0.35s both;
+}
+#page-landing.active #btn-skip-male,
+#page-landing.active #btn-skip-female {
+  animation: anim-fade-in-up 0.5s ease 0.45s both;
+}
+#page-landing.active #btn-skip-to-last-male,
+#page-landing.active #btn-skip-to-last-female {
+  animation: anim-fade-in-up 0.5s ease 0.55s both;
+}
+
+/* Landing page — staggered EXIT (triggered by .landing-exiting class) */
+.lang-toggle.exiting {
+  animation: anim-shrink-out 0.15s cubic-bezier(0.4, 0, 1, 1) 0.1s forwards;
+}
+.landing-exiting .landing-title {
+  animation: anim-shrink-out 0.18s cubic-bezier(0.4, 0, 1, 1) 0s     forwards;
+}
+.landing-exiting .landing-description {
+  animation: anim-shrink-out 0.16s cubic-bezier(0.4, 0, 1, 1) 0.04s  forwards;
+}
+.landing-exiting #btn-start-male,
+.landing-exiting #btn-start-female {
+  animation: anim-shrink-out 0.15s cubic-bezier(0.4, 0, 1, 1) 0.08s  forwards;
+}
+.landing-exiting #btn-skip-male,
+.landing-exiting #btn-skip-female {
+  animation: anim-shrink-out 0.14s cubic-bezier(0.4, 0, 1, 1) 0.12s  forwards;
+}
+.landing-exiting #btn-skip-to-last-male,
+.landing-exiting #btn-skip-to-last-female {
+  animation: anim-shrink-out 0.14s cubic-bezier(0.4, 0, 1, 1) 0.16s  forwards;
+}
+
+/* Question page — staggered ENTRANCE (triggered by .question-entering class) */
+.question-entering .question-header {
+  animation: anim-fade-in-down 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.question-entering #question-body {
+  animation: anim-fade-in-up 0.45s ease 0.12s both;
+}
+.question-entering .btn-answer:nth-child(1) {
+  animation: anim-fade-in-up 0.38s ease 0.2s both;
+}
+.question-entering .btn-answer:nth-child(2) {
+  animation: anim-fade-in-up 0.38s ease 0.28s both;
+}
+.question-entering .btn-answer:nth-child(3) {
+  animation: anim-fade-in-up 0.38s ease 0.36s both;
+}
+.question-entering .btn-answer:nth-child(4) {
+  animation: anim-fade-in-up 0.38s ease 0.44s both;
+}
+.question-entering .btn-answer:nth-child(5) {
+  animation: anim-fade-in-up 0.38s ease 0.52s both;
+}
+.question-entering .question-nav {
+  animation: anim-fade-in-up 0.35s ease 0.58s both;
+}
+
+/* Disable all hover/tooltip interactions while results are animating in */
+.results-entering .has-tooltip,
+.results-entering .party-card,
+.results-entering .axis-party-row {
+  pointer-events: none;
+}
+
+/* Results page — staggered entrance (triggered by .results-entering class) */
+/* Phase 1: title + subtitle appear centered on screen, then slide up together (1.8s) */
+.results-entering .results-title {
+  animation: anim-results-title-enter 2.2s linear both;
+}
+.results-entering .results-subtitle {
+  animation: anim-results-subtitle-enter 2.2s linear both;
+}
+/* Phase 2: axis blocks appear in order, 150ms apart */
+.results-entering .result-axis-block:nth-child(1) {
+  animation: anim-fade-in-up 0.55s ease 2.2s both;
+}
+.results-entering .result-axis-block:nth-child(2) {
+  animation: anim-fade-in-up 0.55s ease 2.35s both;
+}
+.results-entering .result-axis-block:nth-child(3) {
+  animation: anim-fade-in-up 0.55s ease 2.5s both;
+}
+.results-entering .result-axis-block:nth-child(4) {
+  animation: anim-fade-in-up 0.55s ease 2.65s both;
+}
+/* Phase 3: rest of page after all axes are settled */
+.results-entering .party-section {
+  animation: anim-fade-in-up 0.5s ease 3.15s both;
+}
+.results-entering .share-section {
+  animation: anim-fade-in-up 0.5s ease 3.3s both;
+}
+.results-entering .results-footer {
+  animation: anim-fade-in-up 0.5s ease 3.15s both;
+}
+
+/* ============================================================
+   SHARE TOAST NOTIFICATION
+   ============================================================ */
+.share-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #2d3748;
+  color: #e2e8f0;
+  font-family: 'Heebo', Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  direction: rtl;
+  text-align: center;
+  max-width: calc(100vw - 2rem);
+  white-space: normal;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.share-toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   CONSENT SECTION
+   ============================================================ */
+.consent-section {
+  margin: 20px 0 4px;
+  padding: 14px 18px;
+  background: rgba(66, 153, 225, 0.07);
+  border: 1px solid rgba(66, 153, 225, 0.22);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.consent-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.consent-checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #3182ce;
+}
+
+.consent-status {
+  margin-top: 8px;
+  font-size: 13px;
+  min-height: 18px;
+  color: #a0aec0;
+}
+
+.consent-status--saving { color: #718096; }
+.consent-status--ok     { color: #38a169; font-weight: 600; }
+.consent-status--error  { color: #e53e3e; }
+
+/* ============================================================
+   WIDE DESKTOP — Results page full-screen 3-column layout
+   ============================================================ */
+@media (min-width: 900px) {
+  /* Stretch container to fill the full viewport height */
+  #page-results {
+    padding: 1.5rem 2rem;
+    align-items: stretch;
+  }
+
+  /* 3-column grid: [header/share/footer] | [bars] | [aside] */
+  /* In RTL: column 1 = rightmost (title+share+restart), column 3 = leftmost (consent) */
+  #page-results .container {
+    max-width: none;
+    display: grid;
+    grid-template-areas:
+      "header bars aside"
+      "share  bars aside"
+      "footer bars aside";
+    grid-template-columns: 220px 1fr 220px;
+    grid-template-rows: auto 1fr auto;
+    column-gap: 2.5rem;
+  }
+
+  /* Right column top: title + subtitle */
+  .results-header {
+    grid-area: header;
+    align-self: start; /* don't stretch to fill the 1fr row — keeps height = content */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+    overflow: visible; /* allow title to animate outside the column */
+  }
+
+  .results-title {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .results-subtitle {
+    margin-bottom: 0;
+  }
+
+  /* Center column: 4 axis bars, vertically centered */
+  #results-bars {
+    grid-area: bars;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.6rem;
+  }
+
+  /* Left column: consent section */
+  .results-aside {
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .results-aside .consent-section {
+    margin: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 0.78rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Right column middle: share buttons */
+  .share-section {
+    grid-area: share;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 3.65rem;
+    border-top: none;
+    text-align: center;
+  }
+
+  .share-section .share-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Right column bottom: restart button */
+  .results-footer {
+    grid-area: footer;
+    margin-top: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Big party cards hidden on desktop — per-axis mini rows are sufficient */
+  #results-parties {
+    display: none;
+  }
+
+  /* Header animation is JS-driven (animResultsHeaderDesktop in app.js).
+     Inline styles set by JS override any CSS here, so no rules needed. */
+
+  /* Bars and aside start after the JS header animation finishes (~3.5s).
+     Override the global delays which are tuned for the shorter mobile header. */
+  .results-entering .result-axis-block:nth-child(1) { animation-delay: 3.5s; }
+  .results-entering .result-axis-block:nth-child(2) { animation-delay: 3.65s; }
+  .results-entering .result-axis-block:nth-child(3) { animation-delay: 3.8s; }
+  .results-entering .result-axis-block:nth-child(4) { animation-delay: 3.95s; }
+
+  /* Aside fades in after all bars have settled */
+  .results-entering .results-aside {
+    animation: anim-fade-in-up 0.5s ease 4.6s both;
+  }
+  .results-entering .results-footer {
+    animation: anim-fade-in-up 0.5s ease 4.6s both;
+  }
+  .results-entering .share-section {
+    animation: anim-fade-in-up 0.5s ease 4.6s both;
+  }
+}

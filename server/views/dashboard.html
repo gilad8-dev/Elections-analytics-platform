@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Politicalculator — Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a202c;
+      min-height: 100vh;
+    }
+
+    /* ── Dashboard ── */
+    .dash-header {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 28px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .dash-header h1 { font-size: 17px; font-weight: 700; color: #2d3748; }
+    .header-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .btn-outline {
+      padding: 6px 14px;
+      border: 1px solid #cbd5e0;
+      border-radius: 7px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #4a5568;
+      white-space: nowrap;
+      transition: background .12s, border-color .12s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-outline:hover { background: #f7fafc; border-color: #a0aec0; }
+    .btn-outline.accent { background: #ebf8ff; border-color: #90cdf4; color: #2b6cb0; }
+    .btn-outline.accent:hover { background: #bee3f8; }
+
+    .dash-main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* ── Demo notice ── */
+    .demo-notice {
+      background: #fffbeb;
+      border: 1px solid #f6e05e;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      color: #744210;
+      margin-bottom: 24px;
+    }
+
+    /* ── Stat cards ── */
+    .stat-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      padding: 20px 24px;
+      flex: 1 1 160px;
+    }
+    .stat-card-full { flex: 1 1 100%; }
+    .stat-card .label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #718096;
+      margin-bottom: 6px;
+    }
+    .stat-card .value {
+      font-size: 32px;
+      font-weight: 800;
+      color: #2d3748;
+    }
+    .stat-card .sub {
+      font-size: 12px;
+      color: #a0aec0;
+      margin-top: 2px;
+    }
+
+    /* ── Axis sections ── */
+    .axes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 640px) { .axes-grid { grid-template-columns: 1fr; } }
+
+    .axis-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      padding: 20px 22px;
+    }
+    .axis-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .axis-card .axis-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .axis-card .axis-kv {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #4a5568;
+      margin-bottom: 6px;
+    }
+    .axis-card .axis-kv strong { color: #1a202c; }
+
+    /* Histogram */
+    .histogram {
+      margin: 14px 0 10px;
+    }
+    .histogram-label {
+      font-size: 11px;
+      color: #718096;
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .histogram-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 60px;
+    }
+    .hist-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .hist-bar {
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      min-height: 2px;
+      transition: height .3s ease;
+    }
+    .histogram-x {
+      display: flex;
+      gap: 3px;
+      margin-top: 3px;
+    }
+    .hist-x-label {
+      flex: 1;
+      font-size: 9px;
+      color: #a0aec0;
+      text-align: center;
+    }
+
+    /* Party distribution table */
+    .party-dist {
+      margin-top: 12px;
+    }
+    .party-dist-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #718096;
+      margin-bottom: 6px;
+    }
+    .party-dist-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #4a5568;
+      padding: 3px 0;
+      border-bottom: 1px solid #f7fafc;
+    }
+    .party-dist-row:last-child { border-bottom: none; }
+    .party-dist-row .party-id { font-family: monospace; color: #2d3748; }
+    .party-dist-row .party-count { font-weight: 700; color: #2b6cb0; }
+
+    .empty-state {
+      text-align: center;
+      color: #a0aec0;
+      font-size: 13px;
+      padding: 20px 0;
+    }
+
+    .refresh-hint {
+      font-size: 12px;
+      color: #a0aec0;
+      text-align: right;
+      margin-bottom: 14px;
+    }
+
+    /* ── Question analysis panel ── */
+    .q-panel {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      padding: 22px 24px 26px;
+      margin-top: 24px;
+    }
+    .q-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .q-panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #718096;
+    }
+    .q-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .q-nav-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a5568;
+      transition: background .12s;
+    }
+    .q-nav-btn:hover:not(:disabled) { background: #f7fafc; }
+    .q-nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .q-nav-select {
+      padding: 4px 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #2d3748;
+      background: #fff;
+      cursor: pointer;
+      max-width: 260px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a202c;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      direction: rtl;
+      text-align: right;
+    }
+    .q-meta {
+      font-size: 12px;
+      color: #a0aec0;
+      margin-bottom: 18px;
+    }
+    .q-bars { display: flex; flex-direction: column; gap: 7px; }
+    .q-bar-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 80px;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .q-bar-label { color: #4a5568; text-align: right; white-space: nowrap; }
+    .q-bar-track {
+      background: #edf2f7;
+      border-radius: 4px;
+      height: 18px;
+      overflow: hidden;
+    }
+    .q-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .4s ease;
+    }
+    .q-bar-stat { color: #718096; text-align: left; white-space: nowrap; }
+    .q-empty { font-size: 13px; color: #a0aec0; text-align: center; padding: 20px 0; }
+
+    /* ── Section header ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #718096;
+    }
+
+    /* ── Gender filter toggle ── */
+    .gender-toggle {
+      display: flex;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .gender-btn {
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      background: #fff;
+      color: #718096;
+      cursor: pointer;
+      transition: background .12s, color .12s;
+    }
+    .gender-btn + .gender-btn { border-left: 1px solid #cbd5e0; }
+    .gender-btn.active { background: #ebf8ff; color: #2b6cb0; }
+
+    /* ── Chart-type toggle ── */
+    .q-view-toggle {
+      display: flex;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .q-view-btn {
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      background: #fff;
+      color: #718096;
+      cursor: pointer;
+      transition: background .12s, color .12s;
+    }
+    .q-view-btn + .q-view-btn { border-left: 1px solid #cbd5e0; }
+    .q-view-btn.active { background: #ebf8ff; color: #2b6cb0; }
+
+    /* ── Pie chart layout ── */
+    .q-pie-wrap {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .q-pie-canvas { flex-shrink: 0; }
+    .q-pie-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 12px;
+      color: #4a5568;
+    }
+    .q-pie-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .q-pie-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .q-pie-legend-pct { margin-left: auto; padding-left: 14px; font-weight: 700; color: #2d3748; }
+  </style>
+</head>
+<body>
+  <script src="/js/questions.js"></script>
+
+  <!-- ======================== DASHBOARD ======================== -->
+  <header class="dash-header">
+    <h1>Politicalculator — Live Results</h1>
+    <div class="header-actions">
+      <a class="btn-outline" href="/">Take the Quiz</a>
+      <button class="btn-outline accent" id="export-btn">Download CSV</button>
+      <button class="btn-outline" id="refresh-btn">Refresh</button>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <p class="demo-notice">
+      Aggregated, anonymized responses from consent-based quiz submissions. No personally identifiable information is stored.
+    </p>
+
+    <p class="refresh-hint" id="last-updated"></p>
+
+    <!-- Stats section header -->
+    <div class="section-header">
+      <span class="section-title">Statistics</span>
+    </div>
+
+    <!-- Total submissions -->
+    <div class="stat-row">
+      <div class="stat-card stat-card-full">
+        <div class="label">Total submissions</div>
+        <div class="value" id="total-count">—</div>
+        <div class="sub">anonymous, with consent</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="label">Male submissions</div>
+        <div class="value" id="male-count">—</div>
+        <div class="sub">answered as male</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Female submissions</div>
+        <div class="value" id="female-count">—</div>
+        <div class="sub">answered as female</div>
+      </div>
+    </div>
+
+    <!-- Per-axis stats -->
+    <div class="axes-grid" id="axes-grid"></div>
+
+    <!-- Per-question analysis -->
+    <div class="q-panel" id="q-panel">
+      <div class="q-panel-header">
+        <span class="q-panel-title">Question Analysis</span>
+        <div class="q-nav">
+          <button class="q-nav-btn" id="q-prev" title="Previous question">&#8592;</button>
+          <select class="q-nav-select" id="q-select"></select>
+          <button class="q-nav-btn" id="q-next" title="Next question">&#8594;</button>
+        </div>
+        <div class="q-view-toggle">
+          <button class="q-view-btn active" id="q-btn-bar">Bar</button>
+          <button class="q-view-btn" id="q-btn-pie">Pie</button>
+        </div>
+        <div class="gender-toggle" id="q-gender-toggle">
+          <button class="gender-btn active" data-gender="all">All</button>
+          <button class="gender-btn" data-gender="male">Male</button>
+          <button class="gender-btn" data-gender="female">Female</button>
+        </div>
+      </div>
+      <div id="q-text" class="q-text"></div>
+      <div id="q-meta" class="q-meta"></div>
+      <div id="q-bars" class="q-bars"></div>
+    </div>
+  </main>
+
+  <script>
+    'use strict';
+
+    const _axisGender = { first: 'all', second: 'all', third: 'all', fourth: 'all' };
+    let _qGender = 'all';
+
+    const AXES = [
+      { key: 'first',  label: 'Axis 1 (First)',  color: '#3182ce' },
+      { key: 'second', label: 'Axis 2 (Second)', color: '#2f855a' },
+      { key: 'third',  label: 'Axis 3 (Third)',  color: '#dd6b20' },
+      { key: 'fourth', label: 'Axis 4 (Fourth)', color: '#805ad5' }
+    ];
+
+    // ── Stats ─────────────────────────────────────────────────────
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats?gender=all');
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+        document.getElementById('total-count').textContent  = data.total.toLocaleString();
+        document.getElementById('male-count').textContent   = data.maleCount != null ? data.maleCount.toLocaleString() : '—';
+        document.getElementById('female-count').textContent = data.femaleCount != null ? data.femaleCount.toLocaleString() : '—';
+        document.getElementById('last-updated').textContent =
+          'Last updated: ' + new Date().toLocaleTimeString();
+        AXES.forEach(a => { _axisGender[a.key] = 'all'; });
+        buildAxisGrid();
+        AXES.forEach(({ key }) => renderAxisCard(key, data.stats[key]));
+      } catch (err) {
+        document.getElementById('axes-grid').innerHTML =
+          '<p class="empty-state">Failed to load stats: ' + err.message + '</p>';
+      }
+    }
+
+    async function loadAxisStats(key) {
+      const card = document.getElementById('axis-card-' + key);
+      if (!card) return;
+      try {
+        const res = await fetch('/api/stats?gender=' + _axisGender[key]);
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+        renderAxisCard(key, data.stats[key]);
+      } catch { /* leave card as-is on error */ }
+    }
+
+    function buildAxisGrid() {
+      const grid = document.getElementById('axes-grid');
+      grid.innerHTML = '';
+      AXES.forEach(({ key }) => {
+        const wrapper = document.createElement('div');
+        wrapper.id = 'axis-card-' + key;
+        wrapper.className = 'axis-card';
+        grid.appendChild(wrapper);
+      });
+    }
+
+    function renderAxisCard(key, axisStats) {
+      const card = document.getElementById('axis-card-' + key);
+      if (!card) return;
+      card.innerHTML = '';
+
+      const { label, color } = AXES.find(a => a.key === key);
+
+      const headerRow = document.createElement('div');
+      headerRow.className = 'axis-card-header';
+
+      const titleEl = document.createElement('div');
+      titleEl.className = 'axis-title';
+      titleEl.style.color = color;
+      titleEl.textContent = label;
+      headerRow.appendChild(titleEl);
+
+      const toggle = document.createElement('div');
+      toggle.className = 'gender-toggle';
+      ['all', 'male', 'female'].forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'gender-btn' + (_axisGender[key] === g ? ' active' : '');
+        btn.textContent = g.charAt(0).toUpperCase() + g.slice(1);
+        btn.addEventListener('click', () => {
+          _axisGender[key] = g;
+          loadAxisStats(key);
+        });
+        toggle.appendChild(btn);
+      });
+      headerRow.appendChild(toggle);
+      card.appendChild(headerRow);
+
+      if (!axisStats || axisStats.average === null) {
+        const empty = document.createElement('p');
+        empty.className = 'empty-state';
+        empty.textContent = 'No data yet';
+        card.appendChild(empty);
+        return;
+      }
+
+      const avgRow = document.createElement('div');
+      avgRow.className = 'axis-kv';
+      avgRow.innerHTML = '<span>Average score</span><strong>' + axisStats.average.toFixed(1) + ' / 100</strong>';
+      card.appendChild(avgRow);
+
+      if (axisStats.topParty) {
+        const topRow = document.createElement('div');
+        topRow.className = 'axis-kv';
+        topRow.innerHTML =
+          '<span>Most recommended</span><strong>' +
+          escHtml(axisStats.topParty.id) + ' (' + axisStats.topParty.count + ')</strong>';
+        card.appendChild(topRow);
+      }
+
+      const hist = axisStats.histogram;
+      const maxBucket = Math.max(...hist, 1);
+      const histSection = document.createElement('div');
+      histSection.className = 'histogram';
+      const histLabel = document.createElement('div');
+      histLabel.className = 'histogram-label';
+      histLabel.textContent = 'Score distribution';
+      histSection.appendChild(histLabel);
+      const barsEl = document.createElement('div');
+      barsEl.className = 'histogram-bars';
+      hist.forEach(count => {
+        const wrap = document.createElement('div');
+        wrap.className = 'hist-bar-wrap';
+        const bar = document.createElement('div');
+        bar.className = 'hist-bar';
+        bar.style.height = Math.round((count / maxBucket) * 100) + '%';
+        bar.style.background = color;
+        bar.title = count + ' submissions';
+        wrap.appendChild(bar);
+        barsEl.appendChild(wrap);
+      });
+      histSection.appendChild(barsEl);
+      const xLabels = document.createElement('div');
+      xLabels.className = 'histogram-x';
+      ['0','10','20','30','40','50','60','70','80','90'].forEach(l => {
+        const lbl = document.createElement('div');
+        lbl.className = 'hist-x-label';
+        lbl.textContent = l;
+        xLabels.appendChild(lbl);
+      });
+      histSection.appendChild(xLabels);
+      card.appendChild(histSection);
+
+      const partDist = axisStats.partyDistribution;
+      const partKeys = Object.keys(partDist).sort((a, b) => partDist[b] - partDist[a]);
+      if (partKeys.length) {
+        const distSection = document.createElement('div');
+        distSection.className = 'party-dist';
+        const distTitle = document.createElement('div');
+        distTitle.className = 'party-dist-title';
+        distTitle.textContent = 'Party recommendations';
+        distSection.appendChild(distTitle);
+        partKeys.forEach(id => {
+          const row = document.createElement('div');
+          row.className = 'party-dist-row';
+          row.innerHTML =
+            '<span class="party-id">' + escHtml(id) + '</span>' +
+            '<span class="party-count">' + partDist[id] + '</span>';
+          distSection.appendChild(row);
+        });
+        card.appendChild(distSection);
+      }
+    }
+
+    // ── CSV Export ────────────────────────────────────────────────
+    document.getElementById('export-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('export-btn');
+      btn.textContent = 'Exporting…';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/stats/export');
+        if (!res.ok) throw new Error('Export failed');
+        const blob = await res.blob();
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'submissions-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+      } catch (err) {
+        alert('Export error: ' + err.message);
+      } finally {
+        btn.textContent = 'Download CSV';
+        btn.disabled = false;
+      }
+    });
+
+    // ── Refresh ───────────────────────────────────────────────────
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+      loadStats();
+      loadQuestionStats();
+    });
+
+    // ── Question analysis panel ───────────────────────────────────
+    const ANSWER_LABELS = [
+      { label: 'Strongly Agree',    color: '#3182ce' },
+      { label: 'Agree',             color: '#63b3ed' },
+      { label: 'Neutral',           color: '#a0aec0' },
+      { label: 'Disagree',          color: '#fc8181' },
+      { label: 'Strongly Disagree', color: '#e53e3e' }
+    ];
+    const AXIS_NAMES = { first: 'Axis 1', second: 'Axis 2', third: 'Axis 3', fourth: 'Axis 4' };
+
+    let _qDist  = null;
+    let _qIndex = 0;
+    let _qView  = 'bar';
+
+    async function loadQuestionStats() {
+      try {
+        const res = await fetch('/api/stats/questions?gender=' + _qGender);
+        if (!res.ok) throw new Error('failed');
+        _qDist = await res.json();
+        buildQuestionSelect();
+        renderQuestion(_qIndex);
+      } catch {
+        document.getElementById('q-bars').innerHTML =
+          '<p class="q-empty">Could not load question stats.</p>';
+      }
+    }
+
+    function buildQuestionSelect() {
+      const sel = document.getElementById('q-select');
+      sel.innerHTML = '';
+      if (typeof QUESTIONS === 'undefined') return;
+      QUESTIONS.forEach((q, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = (i + 1) + '. ' + q.text.slice(0, 55) + (q.text.length > 55 ? '…' : '');
+        sel.appendChild(opt);
+      });
+    }
+
+    function renderQuestion(idx) {
+      if (!_qDist || typeof QUESTIONS === 'undefined') return;
+      _qIndex = idx;
+
+      const q    = QUESTIONS[idx];
+      const dist = _qDist[idx];
+
+      document.getElementById('q-select').value = idx;
+      document.getElementById('q-prev').disabled = (idx === 0);
+      document.getElementById('q-next').disabled = (idx === QUESTIONS.length - 1);
+
+      document.getElementById('q-text').textContent = q.text;
+      document.getElementById('q-meta').textContent =
+        AXIS_NAMES[q.axis] + '  ·  ' + dist.total + ' response' + (dist.total !== 1 ? 's' : '');
+
+      const barsEl = document.getElementById('q-bars');
+      barsEl.innerHTML = '';
+
+      if (dist.total === 0) {
+        barsEl.innerHTML = '<p class="q-empty">No responses yet for this question.</p>';
+        return;
+      }
+
+      if (_qView === 'pie') {
+        renderPie(barsEl, dist);
+      } else {
+        renderBars(barsEl, dist);
+      }
+    }
+
+    function renderBars(container, dist) {
+      const maxCount = Math.max(1, ...[0,1,2,3,4].map(v => dist[String(v)]));
+
+      [0,1,2,3,4].forEach(val => {
+        const count = dist[String(val)];
+        const pct   = dist.total > 0 ? Math.round((count / dist.total) * 100) : 0;
+        const barW  = Math.round((count / maxCount) * 100);
+        const info  = ANSWER_LABELS[val];
+
+        const row = document.createElement('div');
+        row.className = 'q-bar-row';
+
+        const lbl = document.createElement('div');
+        lbl.className = 'q-bar-label';
+        lbl.textContent = info.label;
+
+        const track = document.createElement('div');
+        track.className = 'q-bar-track';
+        const fill = document.createElement('div');
+        fill.className = 'q-bar-fill';
+        fill.style.width = barW + '%';
+        fill.style.background = info.color;
+        track.appendChild(fill);
+
+        const stat = document.createElement('div');
+        stat.className = 'q-bar-stat';
+        stat.textContent = count + '  (' + pct + '%)';
+
+        row.appendChild(lbl);
+        row.appendChild(track);
+        row.appendChild(stat);
+        container.appendChild(row);
+      });
+    }
+
+    function renderPie(container, dist) {
+      const SIZE   = 180;
+      const R      = SIZE / 2;
+      const counts = [0,1,2,3,4].map(v => dist[String(v)]);
+      const total  = dist.total;
+
+      const wrap = document.createElement('div');
+      wrap.className = 'q-pie-wrap';
+
+      const canvas = document.createElement('canvas');
+      canvas.className = 'q-pie-canvas';
+      canvas.width  = SIZE;
+      canvas.height = SIZE;
+      wrap.appendChild(canvas);
+
+      const legend = document.createElement('div');
+      legend.className = 'q-pie-legend';
+      [0,1,2,3,4].forEach((val, i) => {
+        const count = counts[i];
+        const pct   = total > 0 ? Math.round((count / total) * 100) : 0;
+        const info  = ANSWER_LABELS[val];
+        const legendRow = document.createElement('div');
+        legendRow.className = 'q-pie-legend-row';
+        legendRow.innerHTML =
+          '<span class="q-pie-swatch" style="background:' + info.color + '"></span>' +
+          '<span>' + info.label + '</span>' +
+          '<span class="q-pie-legend-pct">' + count + ' (' + pct + '%)</span>';
+        legend.appendChild(legendRow);
+      });
+      wrap.appendChild(legend);
+      container.appendChild(wrap);
+
+      const ctx = canvas.getContext('2d');
+      let startAngle = -Math.PI / 2;
+
+      for (let i = 0; i < 5; i++) {
+        const count = counts[i];
+        const slice = (count / total) * 2 * Math.PI;
+        if (count > 0) {
+          ctx.beginPath();
+          ctx.moveTo(R, R);
+          ctx.arc(R, R, R - 2, startAngle, startAngle + slice);
+          ctx.closePath();
+          ctx.fillStyle = ANSWER_LABELS[i].color;
+          ctx.fill();
+          ctx.strokeStyle = '#fff';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+        startAngle += slice;
+      }
+    }
+
+    document.getElementById('q-prev').addEventListener('click', () => {
+      if (_qIndex > 0) renderQuestion(_qIndex - 1);
+    });
+    document.getElementById('q-next').addEventListener('click', () => {
+      if (typeof QUESTIONS !== 'undefined' && _qIndex < QUESTIONS.length - 1)
+        renderQuestion(_qIndex + 1);
+    });
+    document.getElementById('q-select').addEventListener('change', function() {
+      renderQuestion(Number(this.value));
+    });
+
+    document.getElementById('q-btn-bar').addEventListener('click', () => {
+      _qView = 'bar';
+      document.getElementById('q-btn-bar').classList.add('active');
+      document.getElementById('q-btn-pie').classList.remove('active');
+      renderQuestion(_qIndex);
+    });
+    document.getElementById('q-btn-pie').addEventListener('click', () => {
+      _qView = 'pie';
+      document.getElementById('q-btn-pie').classList.add('active');
+      document.getElementById('q-btn-bar').classList.remove('active');
+      renderQuestion(_qIndex);
+    });
+
+    document.querySelectorAll('#q-gender-toggle .gender-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _qGender = btn.dataset.gender;
+        document.querySelectorAll('#q-gender-toggle .gender-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadQuestionStats();
+      });
+    });
+
+    // ── Utilities ─────────────────────────────────────────────────
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Init ──────────────────────────────────────────────────────
+    loadStats();
+    loadQuestionStats();
+  </script>
+</body>
+</html>
